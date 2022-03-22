@@ -55,11 +55,28 @@ const deleteProduct = async (req,res)=>{
     res.send(200).send('product is deleted')
 }
 
+// 6. connect one to many relatins product and Reviews
+
+const  getProductReviews = async (req,res)=>{
+    let id = req.params.id;
+    console.log(id);
+    const data = await Product.findAll({
+        include:[{
+            model: Review,
+            as: 'review'
+        }],
+        where:{id:id}
+    })
+    res.status(200).send(data)
+}
+
+
 module.exports = {
     addProduct,
     getAllProduct,
     getSingleProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductReviews
 
 }
